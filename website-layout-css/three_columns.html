@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三列布局--左右固定宽度</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .left {
+            width: 200px;
+            height: 500px;
+            background-color: #cccccc;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .middle {
+            height: 500px;
+            background-color: #999999;
+            margin: 0 310px 0 210px;
+        }
+        .right {
+            width: 300px;
+            height: 500px;
+            background-color: #dddddd;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="left">左侧为200px固定宽度</div>
+    <div class="middle"></div>
+    <div class="right">右侧为300px固定宽度</div>
+</div>
+</body>
+</html>
