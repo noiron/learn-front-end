@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tooltip效果</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            line-height: 1.8;
+            background: url("background.jpg") no-repeat center top;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+
+        #demo {
+            width: 500px;
+            margin: 30px auto;
+            padding: 20px 30px;
+            position: relative;
+            top: 100px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #demo h2 {
+            color: #0099FF;
+        }
+
+        #demo .tooltip {
+            color: #0099FF;
+            cursor: help;
+        }
+
+        .tooltip-box {
+            display: block;
+            background: #ffffff;
+            line-height: 1.6em;
+            border: 1px solid #66CCFF;
+            color: #333333;
+            padding: 20px;
+            font-size: 12px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="demo">
+    <h2>使用JavaScript实现Tooltip效果</h2>
+
+    <p>ToolTip是常见的网页特效，它可以在用户将指针放置在控件上时为用户显示提示信息。
+        比如，给缩略词显示一行全文，例如：<a class="tooltip" id="tooltip1">HTML</a>。
+        也可以显示一段文字，例如：<a class="tooltip" id="tooltip2">JavaScript的5种基本数据类型。</a>
+    </p>
+    <p>
+    <p>ToolTip效果还可以用来显示图片，例：<a class="tooltip" id="tooltip3">我的头像</a>。
+    当然也显示可以一些带格式的内容，例： <a class="tooltip" id="tooltip4">我的资料</a>。
+    </p>
+
+    <p>甚至你可以显示一整个网站：例：<a class="tooltip" id="tooltip5">我的博客</a>。</p>
+
+    <p>好的ToolTip需要考虑样式、效果、页面的边界等信息。</p>
+</div>
+
+<script>
+    var toolTipBoxClass = "tooltip-box";
+
+    // 添加事件函数
+    function addEvent(element, event, callbackfunction) {
+        if (element.addEventListener) {
+            element.addEventListener(event, callbackfunction, false);
+        } else if (element.attachEvent) {
+            element.attachEvent('on' + event, callbackfunction);
+        }
+    }
+
+    // 获得元素
+    var getEl = function(id) {
+        return document.getElementById(id);
+    };
+
+    // 当鼠标移至 Tooltip 超链接元素上时，创建或显示提示框
+    // obj - Tooltip 超链接元素
+    // id - Tooltip 提示框的 id
+    // html - 生成 Tooltip 提示框的 HTML
+    // width - Tooltip 提示框宽度（可选）
+    // height - Tooltip 提示框高度（可选）
+    function showToolTip(obj, id, html, width, height) {
+        // 如果不存在名为 id 的提示框元素，则创建该提示框
+        // 创建元素的格式为：<div class="tooltip-box" id="xx"></div>
+        if (document.getElementById(id) == null) {
+            var toolTipBox = document.createElement("div");     // 创建一个 DOM 元素
+            // 设置提示框元素的属性
+            toolTipBox.className = toolTipBoxClass;
+            toolTipBox.id = id;
+            toolTipBox.innerHTML = html;
+            // 将提示框元素添加在 Tooltip 超链接的后面
+            obj.appendChild(toolTipBox);
+
+            // 设置提示框的宽、高、位置、显示方式等属性
+            toolTipBox.style.width = width + "px" || "auto";
+            toolTipBox.style.height = height + "px" || "auto";
+
+            toolTipBox.style.position = "absolute";
+            toolTipBox.style.display = "block";
+
+            // Tooltip 超链接左上角的坐标
+            var left = obj.offsetLeft;
+            var top = obj.offsetTop;
+
+            // 保证 Tooltip 提示框不会超出浏览器的窗口
+            if (left + toolTipBox.offsetWidth > document.body.clientWidth) {
+                var demoLeft = document.getElementById("demo").offsetLeft;
+                left = document.body.clientWidth - toolTipBox.offsetWidth - demoLeft;
+                if (left < 0) {
+                    left = 0;
+                }
+            }
+            toolTipBox.style.left = left + "px";
+            toolTipBox.style.top = top + 20 + "px";
+
+            // 当鼠标离开后，隐藏提示框
+            addEvent(obj, "mouseleave", function() {
+                setTimeout(function() {
+                    getEl(id).style.display = "none";
+                }, 300);
+            })
+
+        } else {
+            // 如果提示框元素已经存在了，就将它显示出来
+            document.getElementById(id).style.display = "block";
+        }
+    }
+
+    // 利用事件冒泡来处理所有的 Tooltip 超链接的鼠标移入事件
+    addEvent(demo, "mouseover", function(e) {
+        var event = e || window.event;
+        var target = event.target || event.srcElement;
+
+        if (target.className == "tooltip") {
+            var _html;
+            var _id;
+            var _width = 200;
+
+            switch (target.id) {
+                case "tooltip1":
+                    _id = "t1";
+                    _html = "HyperText Markup Language";
+                    break;
+                case "tooltip2":
+                    _id = "t2";
+                    _html = "<h2>JavaScript的5种基本数据类型：</h2><p>Undefined</p><p>Null</p><p>Boolean</p><p>Number</p><p>String</p>";
+                    break;
+                case "tooltip3":
+                    _id = "t3";
+                    _html = "<img src='marvin.jpg'>";
+                    _width = 220;
+                    break;
+                case "tooltip4":
+                    _id = "t4";
+                    _html = "<img src='marvin.jpg' width='150px'> <p><strong>姓名：Wu Kai</strong></p><p>简介：正在学习中的前端程序员</p>";
+                    _width = 200;
+                    break;
+                case "tooltip5":
+                    _id = "t5";
+                    _html = '<iframe src="http://noiron.github.io" width="600" height="600"></iframe>';
+                    _width = 600;
+                    break;
+                default :
+                    return false;
+            }
+            showToolTip(target, _id, _html, _width);
+        }
+    });
+</script>
+
+</body>
+</html>
