@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body {
+            background-color: #333333;
+        }
+        .bg-div {
+            background-image: url("river.jpg");
+            width: 1228px;
+            height: 690px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .logo {
+            background-image: url("logo.png");
+            width: 107px;
+            height: 53px;
+            float: left;
+            margin: -4px 18px 0 0;
+        }
+        .search-box {
+            position: absolute;
+            top: 200px;
+            left: 300px;
+        }
+        form {
+            float: left;
+            background-color: #ffffff;
+            padding: 5px;
+        }
+        .search-input-text {
+            border: 0;
+            float: left;
+            height: 25px;
+            line-height: 25px;
+            outline: none;
+            width: 350px;
+        }
+        .search-input-button {
+            border: 0;
+            background-image: url("search-button.png");
+            width: 29px;
+            height: 29px;
+            float: left;
+        }
+        .suggest {
+            width: 388px;
+            background-color: #ffffff;
+            border: 1px solid #999999;
+        }
+        .suggest ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .suggest ul li {
+            padding: 3px;
+            font-size: 14px;
+            line-height: 25px;
+            cursor: pointer;
+        }
+        .suggest ul li:hover {
+            text-decoration: underline;
+            background-color: #e5e5e5;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-div">
+        <div class="search-box">
+            <div class="logo"></div>
+            <form id="search-form">
+                <input type="text" class="search-input-text" id="search-input"/>
+                <input type="submit" class="search-input-button" value=""/>
+            </form>
+        </div>
+    </div>
+
+    <div class="suggest" id="search-suggest" style="display: none">
+        <ul>
+            <li>搜索结果1</li>
+            <li>搜索结果2</li>
+            <li>搜索结果3</li>
+            <li>搜索结果4</li>
+            <li>搜索结果5</li>
+        </ul>
+    </div>
+
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script>
+    $('#search-input').bind('keyup', function () {
+        $('#search-suggest').show().css({
+            top:$('#search-form').offset().top + $('#search-form').height(),
+            left:$('#search-form').offset().left,
+            position: 'absolute'
+        });
+    })
+</script>
+</body>
+</html>
