@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div id="container">
+    <!--一共有五张不同的图片，加上头尾各一张重复的 -->
+    <div id="list" style="left:-600px;">
+        <img src="img/5.jpg">
+        <img src="img/1.jpg">
+        <img src="img/2.jpg">
+        <img src="img/3.jpg">
+        <img src="img/4.jpg">
+        <img src="img/5.jpg">
+        <img src="img/1.jpg">
+    </div>
+
+    <!-- 图片下方的圆点按钮，index 为自定义属性，表示第几张图片 -->
+    <div id="buttons">
+        <span index="0" class="on"></span>
+        <span index="1"></span>
+        <span index="2"></span>
+        <span index="3"></span>
+        <span index="4"></span>
+    </div>
+
+    <!-- 左右切换的按钮 -->
+    <a href="javascript:;" id="prev" class="arrow">&lt;</a>
+    <a href="javascript:;" id="next" class="arrow">&gt;</a>
+
+</div>
+<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
